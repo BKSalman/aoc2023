@@ -1,7 +1,7 @@
-const INPUT: &str = include_str!("../../part2.txt");
+const INPUT: &str = include_str!("../../input2.txt");
 
-fn main() {
-    let result = INPUT
+fn solve(input: &str) -> u32 {
+    input
         .lines()
         .map(|l| {
             let mut lmao: Vec<_> = l
@@ -46,11 +46,28 @@ fn main() {
                 })
                 .collect();
 
-            lmao.sort_by(|a, b| a.cmp(&b));
+            lmao.sort_by(|a, b| a.0.cmp(&b.0));
 
             lmao.first().unwrap().1 * 10 + lmao.last().unwrap().1
         })
-        .sum::<u32>();
+        .sum::<u32>()
+}
 
+fn main() {
+    let result = solve(INPUT);
     println!("{result}");
+}
+
+#[cfg(test)]
+mod tests {
+    use super::solve;
+
+    const INPUT: &str = include_str!("../../example2.txt");
+
+    #[test]
+    fn it_works() {
+        let result = solve(INPUT);
+
+        assert_eq!(result, 142);
+    }
 }
